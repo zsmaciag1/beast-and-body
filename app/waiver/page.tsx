@@ -150,15 +150,15 @@ export default function WaiverPage() {
   }
 
   const inputClass =
-    'w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(56,189,248,0.2)] rounded-lg px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-all text-sm';
+    'w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(239,68,68,0.2)] rounded-lg px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/30 transition-all text-sm';
   const labelClass = 'block text-slate-300 text-sm font-medium mb-1.5';
 
   if (submitted) {
     return (
       <div className="min-h-screen pt-32 pb-20 px-4 flex items-center justify-center">
         <div className="max-w-lg w-full text-center">
-          <div className="w-20 h-20 rounded-full bg-sky-400/10 border border-sky-400/30 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-20 h-20 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
@@ -167,12 +167,12 @@ export default function WaiverPage() {
             Thank you, <span className="text-white font-semibold">{form.fullName}</span>. Your waiver
             has been received and saved. You&apos;re all set for your session!
           </p>
-          <div className="bg-[#071428] border border-sky-400/10 rounded-xl p-5 mb-8 text-sm text-slate-400 text-left">
+          <div className="bg-[#071428] border border-red-500/10 rounded-xl p-5 mb-8 text-sm text-slate-400 text-left">
             <div className="flex items-center gap-2 mb-3">
-              <svg className="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-sky-400 font-semibold">What&apos;s Next</span>
+              <span className="text-red-500 font-semibold">What&apos;s Next</span>
             </div>
             <ul className="space-y-1.5">
               <li>• Your waiver is on file for all future sessions.</li>
@@ -183,13 +183,13 @@ export default function WaiverPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/schedule"
-              className="bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-bold px-6 py-3 rounded-full text-sm transition-colors"
+              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-6 py-3 rounded-full text-sm transition-colors"
             >
               Book a Session
             </Link>
             <Link
               href="/"
-              className="border border-sky-400/30 text-sky-400 hover:text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors"
+              className="border border-red-500/30 text-red-500 hover:text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors"
             >
               Back to Home
             </Link>
@@ -207,11 +207,11 @@ export default function WaiverPage() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(56,189,248,0.09) 0%, transparent 70%)',
+              'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(239,68,68,0.09) 0%, transparent 70%)',
           }}
         />
         <div className="max-w-3xl mx-auto text-center relative">
-          <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+          <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
             Required Before Your Session
           </p>
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
@@ -227,7 +227,7 @@ export default function WaiverPage() {
         <form onSubmit={handleSubmit} className="space-y-8">
 
           {/* ── SECTION 1: Client Type ── */}
-          <div className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 sm:p-9">
+          <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-9">
             <h2 className="text-xl font-black text-white mb-1">Client Type</h2>
             <p className="text-slate-500 text-sm mb-6">Are you signing this waiver for yourself, your horse, or both?</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -240,7 +240,7 @@ export default function WaiverPage() {
                   key={opt.value}
                   className={`flex items-center gap-3 rounded-xl border p-4 cursor-pointer transition-all ${
                     form.clientType === opt.value
-                      ? 'border-sky-400 bg-sky-400/10'
+                      ? 'border-red-500 bg-red-500/10'
                       : 'border-slate-700 hover:border-slate-600'
                   }`}
                 >
@@ -255,12 +255,12 @@ export default function WaiverPage() {
                   <div
                     className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
                       form.clientType === opt.value
-                        ? 'border-sky-400'
+                        ? 'border-red-500'
                         : 'border-slate-600'
                     }`}
                   >
                     {form.clientType === opt.value && (
-                      <div className="w-2 h-2 rounded-full bg-sky-400" />
+                      <div className="w-2 h-2 rounded-full bg-red-500" />
                     )}
                   </div>
                   <span className={form.clientType === opt.value ? 'text-white font-semibold text-sm' : 'text-slate-400 text-sm'}>
@@ -272,7 +272,7 @@ export default function WaiverPage() {
           </div>
 
           {/* ── SECTION 2: Personal Information ── */}
-          <div className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 sm:p-9">
+          <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-9">
             <h2 className="text-xl font-black text-white mb-1">Personal Information</h2>
             <p className="text-slate-500 text-sm mb-6">Your contact and personal details.</p>
 
@@ -423,9 +423,9 @@ export default function WaiverPage() {
 
           {/* ── SECTION 3: Equine Info (conditional) ── */}
           {isEquine && (
-            <div className="bg-[#0f1a0a] border border-amber-400/15 rounded-2xl p-7 sm:p-9">
+            <div className="bg-[#0f1a0a] border border-blue-400/15 rounded-2xl p-7 sm:p-9">
               <div className="flex items-center gap-2 mb-1">
-                <svg className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                 </svg>
                 <h2 className="text-xl font-black text-white">Equine Information</h2>
@@ -493,7 +493,7 @@ export default function WaiverPage() {
           )}
 
           {/* ── SECTION 4: Medical History ── */}
-          <div className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 sm:p-9">
+          <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-9">
             <h2 className="text-xl font-black text-white mb-1">Medical History</h2>
             <p className="text-slate-500 text-sm mb-6">
               Check any conditions that apply to you. This information is kept strictly confidential.
@@ -505,7 +505,7 @@ export default function WaiverPage() {
                   key={condition}
                   className={`flex items-center gap-3 rounded-lg border p-3 cursor-pointer transition-all text-sm ${
                     form.conditions.includes(condition)
-                      ? 'border-sky-400/50 bg-sky-400/5 text-sky-300'
+                      ? 'border-red-500/50 bg-red-500/5 text-red-400'
                       : 'border-slate-800 text-slate-400 hover:border-slate-700'
                   }`}
                 >
@@ -520,7 +520,7 @@ export default function WaiverPage() {
                   <div
                     className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${
                       form.conditions.includes(condition)
-                        ? 'border-sky-400 bg-sky-400'
+                        ? 'border-red-500 bg-red-500'
                         : 'border-slate-600'
                     }`}
                   >
@@ -568,7 +568,7 @@ export default function WaiverPage() {
           </div>
 
           {/* ── SECTION 5: Waiver Text & Agreements ── */}
-          <div className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 sm:p-9">
+          <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-9">
             <h2 className="text-xl font-black text-white mb-4">Waiver & Release of Liability</h2>
 
             {/* Waiver Text */}
@@ -658,7 +658,7 @@ export default function WaiverPage() {
                 <div
                   className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
                     form.agreedToWaiver
-                      ? 'border-sky-400 bg-sky-400'
+                      ? 'border-red-500 bg-red-500'
                       : 'border-slate-600 group-hover:border-slate-500'
                   }`}
                   onClick={() => setForm((p) => ({ ...p, agreedToWaiver: !p.agreedToWaiver }))}
@@ -687,7 +687,7 @@ export default function WaiverPage() {
                 <div
                   className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
                     form.agreedToRisks
-                      ? 'border-sky-400 bg-sky-400'
+                      ? 'border-red-500 bg-red-500'
                       : 'border-slate-600 group-hover:border-slate-500'
                   }`}
                   onClick={() => setForm((p) => ({ ...p, agreedToRisks: !p.agreedToRisks }))}
@@ -717,7 +717,7 @@ export default function WaiverPage() {
                   <div
                     className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
                       form.agreedToEquine
-                        ? 'border-amber-400 bg-amber-400'
+                        ? 'border-blue-400 bg-blue-400'
                         : 'border-slate-600 group-hover:border-slate-500'
                     }`}
                     onClick={() => setForm((p) => ({ ...p, agreedToEquine: !p.agreedToEquine }))}
@@ -736,7 +736,7 @@ export default function WaiverPage() {
                     className="hidden"
                   />
                   <span className="text-slate-300 text-sm leading-relaxed">
-                    <span className="text-amber-400 font-semibold">Equine Release:</span>{' '}
+                    <span className="text-blue-400 font-semibold">Equine Release:</span>{' '}
                     I certify that I am the owner or legally authorized agent for the horse listed above.
                     I confirm the horse is in generally good health and has no known contraindications to
                     cold therapy. I accept full responsibility for the horse&#8217;s behavior during treatment
@@ -749,7 +749,7 @@ export default function WaiverPage() {
           </div>
 
           {/* ── SECTION 6: Digital Signature ── */}
-          <div className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 sm:p-9">
+          <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-9">
             <h2 className="text-xl font-black text-white mb-1">Digital Signature</h2>
             <p className="text-slate-500 text-sm mb-6">
               Type your full legal name exactly as entered above to serve as your electronic signature.
@@ -773,7 +773,7 @@ export default function WaiverPage() {
                   style={{ fontFamily: 'Georgia, serif', fontSize: '1rem' }}
                 />
                 {form.signature && form.signature.trim().toLowerCase() !== form.fullName.trim().toLowerCase() && (
-                  <p className="text-amber-400 text-xs mt-1.5">Signature must match your full name exactly.</p>
+                  <p className="text-blue-400 text-xs mt-1.5">Signature must match your full name exactly.</p>
                 )}
               </div>
               <div>
@@ -791,7 +791,7 @@ export default function WaiverPage() {
               </div>
             </div>
 
-            <div className="bg-sky-400/5 border border-sky-400/10 rounded-xl p-4 text-xs text-slate-500 leading-relaxed">
+            <div className="bg-red-500/5 border border-red-500/10 rounded-xl p-4 text-xs text-slate-500 leading-relaxed">
               By typing your name above, you acknowledge that your electronic signature is legally equivalent
               to a handwritten signature and that you have read, understood, and agreed to all terms of
               this waiver. This document will be retained by Beast & Body Mobile Recovery.
@@ -810,7 +810,7 @@ export default function WaiverPage() {
             <button
               type="submit"
               disabled={submitting || !form.agreedToWaiver || !form.agreedToRisks || (isEquine && !form.agreedToEquine)}
-              className="bg-sky-500 hover:bg-sky-400 disabled:opacity-40 disabled:cursor-not-allowed text-[#020c1b] font-black px-10 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-sky-400/25 flex items-center gap-2"
+              className="bg-red-600 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed text-[#020c1b] font-black px-10 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/25 flex items-center gap-2"
             >
               {submitting ? (
                 <>

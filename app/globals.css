@@ -30,7 +30,7 @@ html {
   background: #020c1b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #38bdf8;
+  background: #ef4444;
   border-radius: 3px;
 }
 
@@ -38,7 +38,7 @@ html {
 .form-input {
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 0.5rem;
   padding: 0.625rem 0.875rem;
   color: #f0f9ff;
@@ -52,8 +52,8 @@ html {
 }
 
 .form-input:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
 .form-input option {

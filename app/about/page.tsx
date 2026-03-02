@@ -87,16 +87,16 @@ export default function AboutPage() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(56,189,248,0.1) 0%, transparent 70%)',
+              'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(239,68,68,0.1) 0%, transparent 70%)',
           }}
         />
         <div className="max-w-4xl mx-auto text-center relative">
-          <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-4">
+          <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-4">
             Our Story
           </p>
           <h1 className="text-5xl sm:text-6xl font-black text-white mb-6 leading-tight">
             Built on a Passion for
-            <span className="text-sky-400"> Recovery</span>
+            <span className="text-red-500"> Recovery</span>
           </h1>
           <p className="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
             Beast & Body Mobile Recovery was born from a love of both sport and horses — and the belief that every athlete, two-legged or four, deserves access to the best recovery tools available.
@@ -111,17 +111,17 @@ export default function AboutPage() {
             {/* Visual */}
             <div className="relative order-2 lg:order-1">
               <div
-                className="rounded-3xl p-12 border border-sky-400/15 relative overflow-hidden"
+                className="rounded-3xl p-12 border border-red-500/15 relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, #071428 0%, #020c1b 100%)',
                 }}
               >
                 <div className="absolute top-0 right-0 w-48 h-48 opacity-10"
-                  style={{ background: 'radial-gradient(circle, #38bdf8, transparent 70%)' }}
+                  style={{ background: 'radial-gradient(circle, #ef4444, transparent 70%)' }}
                 />
                 <div className="relative space-y-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center text-sky-400 font-black text-lg">
+                    <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 font-black text-lg">
                       1
                     </div>
                     <div>
@@ -130,7 +130,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-black text-lg">
+                    <div className="w-12 h-12 rounded-xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center text-blue-400 font-black text-lg">
                       2
                     </div>
                     <div>
@@ -139,7 +139,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center text-sky-400 font-black text-lg">
+                    <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 font-black text-lg">
                       3
                     </div>
                     <div>
@@ -148,7 +148,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-black text-lg">
+                    <div className="w-12 h-12 rounded-xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center text-blue-400 font-black text-lg">
                       4
                     </div>
                     <div>
@@ -162,7 +162,7 @@ export default function AboutPage() {
 
             {/* Content */}
             <div className="order-1 lg:order-2">
-              <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+              <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
                 Our Mission
               </p>
               <h2 className="text-4xl font-black text-white mb-6">
@@ -179,7 +179,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/schedule"
-                className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-black px-7 py-3.5 rounded-full text-sm tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-sky-400/25"
+                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-7 py-3.5 rounded-full text-sm tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25"
               >
                 Book a Session Today
               </Link>
@@ -195,7 +195,7 @@ export default function AboutPage() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+            <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               What We Stand For
             </p>
             <h2 className="text-4xl sm:text-5xl font-black text-white">Our Core Values</h2>
@@ -204,9 +204,9 @@ export default function AboutPage() {
             {values.map((value) => (
               <div
                 key={value.title}
-                className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 hover:border-sky-400/25 transition-all duration-300 hover:-translate-y-1"
+                className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 hover:border-red-500/25 transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="w-12 h-12 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center text-sky-400 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 mb-5">
                   {value.icon}
                 </div>
                 <h3 className="text-white font-bold text-lg mb-3">{value.title}</h3>
@@ -221,7 +221,7 @@ export default function AboutPage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+            <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               Credentials
             </p>
             <h2 className="text-4xl font-black text-white">Trained & Certified</h2>
@@ -248,15 +248,15 @@ export default function AboutPage() {
                 key={cert.title}
                 className={`rounded-2xl p-7 border ${
                   cert.accent === 'sky'
-                    ? 'bg-sky-400/5 border-sky-400/20'
-                    : 'bg-amber-400/5 border-amber-400/20'
+                    ? 'bg-red-500/5 border-red-500/20'
+                    : 'bg-blue-400/5 border-blue-400/20'
                 }`}
               >
                 <div
                   className={`w-10 h-10 rounded-lg flex items-center justify-center mb-4 ${
                     cert.accent === 'sky'
-                      ? 'bg-sky-400/15 text-sky-400'
-                      : 'bg-amber-400/15 text-amber-400'
+                      ? 'bg-red-500/15 text-red-500'
+                      : 'bg-blue-400/15 text-blue-400'
                   }`}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,7 +278,7 @@ export default function AboutPage() {
       >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+            <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               FAQ
             </p>
             <h2 className="text-4xl font-black text-white">Common Questions</h2>
@@ -287,7 +287,7 @@ export default function AboutPage() {
             {faqs.map((faq) => (
               <div
                 key={faq.q}
-                className="bg-[#071428] border border-sky-400/10 rounded-xl p-6 hover:border-sky-400/20 transition-colors"
+                className="bg-[#071428] border border-red-500/10 rounded-xl p-6 hover:border-red-500/20 transition-colors"
               >
                 <h3 className="text-white font-semibold mb-2">{faq.q}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">{faq.a}</p>
@@ -307,13 +307,13 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/schedule"
-              className="bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-sky-400/30"
+              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30"
             >
               Book a Session
             </Link>
             <Link
               href="/waiver"
-              className="border border-sky-400/30 hover:border-sky-400 text-sky-400 hover:text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200"
+              className="border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200"
             >
               Sign Your Waiver
             </Link>

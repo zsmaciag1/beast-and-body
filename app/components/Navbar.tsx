@@ -27,7 +27,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#020c1b]/95 backdrop-blur-md shadow-lg shadow-black/30 border-b border-sky-400/10'
+          ? 'bg-[#020c1b]/95 backdrop-blur-md shadow-lg shadow-black/30 border-b border-red-500/10'
           : 'bg-transparent'
       }`}
     >
@@ -43,7 +43,7 @@ export default function Navbar() {
               className="rounded-lg group-hover:opacity-90 transition-opacity"
               priority
             />
-            <div className="text-sky-400 text-[10px] tracking-[0.2em] font-semibold uppercase">
+            <div className="text-red-500 text-[10px] tracking-[0.2em] font-semibold uppercase">
               Mobile Recovery
             </div>
           </Link>
@@ -56,13 +56,13 @@ export default function Navbar() {
                 href={link.href}
                 className={`text-sm font-medium tracking-wide transition-colors relative group ${
                   pathname === link.href
-                    ? 'text-sky-400'
+                    ? 'text-red-500'
                     : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {link.label}
                 <span
-                  className={`absolute -bottom-1 left-0 h-px bg-sky-400 transition-all duration-300 ${
+                  className={`absolute -bottom-1 left-0 h-px bg-red-500 transition-all duration-300 ${
                     pathname === link.href ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                 />
@@ -70,7 +70,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/schedule"
-              className="bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-bold px-5 py-2 rounded-full text-sm transition-all duration-200 hover:shadow-lg hover:shadow-sky-400/25 tracking-wide"
+              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-2 rounded-full text-sm transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 tracking-wide"
             >
               Book Now
             </Link>
@@ -114,14 +114,14 @@ export default function Navbar() {
           menuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="bg-[#071428]/98 backdrop-blur-md border-t border-sky-400/10 px-4 py-4">
+        <div className="bg-[#071428]/98 backdrop-blur-md border-t border-red-500/10 px-4 py-4">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={`block py-3 text-base font-medium border-b border-slate-800 transition-colors ${
                 pathname === link.href
-                  ? 'text-sky-400'
+                  ? 'text-red-500'
                   : 'text-slate-300 hover:text-white'
               }`}
               onClick={() => setMenuOpen(false)}
@@ -131,7 +131,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/schedule"
-            className="mt-4 block text-center bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-bold px-5 py-3 rounded-full text-sm transition-colors tracking-wide"
+            className="mt-4 block text-center bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-3 rounded-full text-sm transition-colors tracking-wide"
             onClick={() => setMenuOpen(false)}
           >
             Book Now

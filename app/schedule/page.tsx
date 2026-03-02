@@ -113,15 +113,15 @@ export default function SchedulePage() {
   }
 
   const inputClass =
-    'w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(56,189,248,0.2)] rounded-lg px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-all text-sm';
+    'w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(239,68,68,0.2)] rounded-lg px-3.5 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/30 transition-all text-sm';
   const labelClass = 'block text-slate-300 text-sm font-medium mb-1.5';
 
   if (submitted) {
     return (
       <div className="min-h-screen pt-32 pb-20 px-4 flex items-center justify-center">
         <div className="max-w-lg w-full text-center">
-          <div className="w-20 h-20 rounded-full bg-sky-400/10 border border-sky-400/30 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-20 h-20 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
@@ -129,9 +129,9 @@ export default function SchedulePage() {
           <p className="text-slate-400 mb-4">
             Your session request has been received. We&apos;ll confirm within 24 hours.
           </p>
-          <div className="bg-sky-400/10 border border-sky-400/20 rounded-xl p-5 mb-8">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-5 mb-8">
             <div className="text-slate-400 text-sm mb-1">Confirmation Number</div>
-            <div className="text-sky-400 font-black text-2xl tracking-widest">{confirmationNumber}</div>
+            <div className="text-red-500 font-black text-2xl tracking-widest">{confirmationNumber}</div>
           </div>
           <p className="text-slate-500 text-sm mb-8">
             A confirmation email will be sent to{' '}
@@ -141,13 +141,13 @@ export default function SchedulePage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/waiver"
-              className="bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-bold px-6 py-3 rounded-full text-sm transition-colors"
+              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-6 py-3 rounded-full text-sm transition-colors"
             >
               Sign Your Waiver
             </Link>
             <Link
               href="/"
-              className="border border-sky-400/30 text-sky-400 hover:text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors"
+              className="border border-red-500/30 text-red-500 hover:text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors"
             >
               Back to Home
             </Link>
@@ -165,11 +165,11 @@ export default function SchedulePage() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(56,189,248,0.09) 0%, transparent 70%)',
+              'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(239,68,68,0.09) 0%, transparent 70%)',
           }}
         />
         <div className="max-w-3xl mx-auto text-center relative">
-          <p className="text-sky-400 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+          <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
             Get Started
           </p>
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
@@ -195,9 +195,9 @@ export default function SchedulePage() {
                 <div
                   className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all ${
                     step > s.num
-                      ? 'bg-sky-500 border-sky-500 text-[#020c1b]'
+                      ? 'bg-red-600 border-red-600 text-[#020c1b]'
                       : step === s.num
-                      ? 'border-sky-400 text-sky-400 bg-sky-400/10'
+                      ? 'border-red-500 text-red-500 bg-red-500/10'
                       : 'border-slate-700 text-slate-600 bg-transparent'
                   }`}
                 >
@@ -211,7 +211,7 @@ export default function SchedulePage() {
                 </div>
                 <span
                   className={`text-xs mt-1.5 font-medium ${
-                    step === s.num ? 'text-sky-400' : 'text-slate-600'
+                    step === s.num ? 'text-red-500' : 'text-slate-600'
                   }`}
                 >
                   {s.label}
@@ -220,7 +220,7 @@ export default function SchedulePage() {
               {idx < 2 && (
                 <div
                   className={`h-px w-16 sm:w-24 mx-2 mb-5 transition-colors ${
-                    step > s.num ? 'bg-sky-400/60' : 'bg-slate-800'
+                    step > s.num ? 'bg-red-500/60' : 'bg-slate-800'
                   }`}
                 />
               )}
@@ -230,7 +230,7 @@ export default function SchedulePage() {
       </div>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <div className="bg-[#071428] border border-sky-400/10 rounded-2xl p-7 sm:p-10">
+        <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-10">
           {/* STEP 1: Service Type */}
           {step === 1 && (
             <div>
@@ -283,8 +283,8 @@ export default function SchedulePage() {
                     className={`rounded-xl p-6 border-2 text-left transition-all duration-200 ${
                       form.serviceType === option.value
                         ? option.accent === 'sky'
-                          ? 'border-sky-400 bg-sky-400/10'
-                          : 'border-amber-400 bg-amber-400/10'
+                          ? 'border-red-500 bg-red-500/10'
+                          : 'border-blue-400 bg-blue-400/10'
                         : 'border-slate-700 bg-transparent hover:border-slate-600'
                     }`}
                   >
@@ -292,8 +292,8 @@ export default function SchedulePage() {
                       className={`mb-3 ${
                         form.serviceType === option.value
                           ? option.accent === 'sky'
-                            ? 'text-sky-400'
-                            : 'text-amber-400'
+                            ? 'text-red-500'
+                            : 'text-blue-400'
                           : 'text-slate-500'
                       }`}
                     >
@@ -309,7 +309,7 @@ export default function SchedulePage() {
                   type="button"
                   disabled={!validateStep1()}
                   onClick={() => setStep(2)}
-                  className="bg-sky-500 hover:bg-sky-400 disabled:opacity-40 disabled:cursor-not-allowed text-[#020c1b] font-bold px-7 py-3 rounded-full text-sm transition-all"
+                  className="bg-red-600 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed text-[#020c1b] font-bold px-7 py-3 rounded-full text-sm transition-all"
                 >
                   Continue →
                 </button>
@@ -465,14 +465,14 @@ export default function SchedulePage() {
 
               {/* Equine fields */}
               {isEquine && (
-                <div className="mt-6 pt-6 border-t border-amber-400/10">
+                <div className="mt-6 pt-6 border-t border-blue-400/10">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-6 h-6 rounded bg-amber-400/10 border border-amber-400/20 flex items-center justify-center">
-                      <svg className="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <div className="w-6 h-6 rounded bg-blue-400/10 border border-blue-400/20 flex items-center justify-center">
+                      <svg className="w-3.5 h-3.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                       </svg>
                     </div>
-                    <h3 className="text-amber-400 font-semibold text-sm tracking-wide">Equine Information</h3>
+                    <h3 className="text-blue-400 font-semibold text-sm tracking-wide">Equine Information</h3>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
@@ -581,7 +581,7 @@ export default function SchedulePage() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-sky-500 hover:bg-sky-400 text-[#020c1b] font-bold px-7 py-3 rounded-full text-sm transition-all"
+                  className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-7 py-3 rounded-full text-sm transition-all"
                 >
                   Review →
                 </button>
@@ -618,9 +618,9 @@ export default function SchedulePage() {
                 ))}
               </div>
 
-              <div className="bg-sky-400/5 border border-sky-400/15 rounded-xl p-4 mb-6 text-sm text-slate-400">
-                <strong className="text-sky-400">Note:</strong> You will receive a confirmation email once we review and confirm your appointment. If you haven&apos;t already, please also{' '}
-                <Link href="/waiver" className="text-sky-400 underline hover:text-sky-300">sign your waiver</Link> before your session.
+              <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4 mb-6 text-sm text-slate-400">
+                <strong className="text-red-500">Note:</strong> You will receive a confirmation email once we review and confirm your appointment. If you haven&apos;t already, please also{' '}
+                <Link href="/waiver" className="text-red-500 underline hover:text-red-400">sign your waiver</Link> before your session.
               </div>
 
               {error && (
@@ -640,7 +640,7 @@ export default function SchedulePage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="bg-sky-500 hover:bg-sky-400 disabled:opacity-60 text-[#020c1b] font-black px-8 py-3 rounded-full text-sm transition-all flex items-center gap-2"
+                  className="bg-red-600 hover:bg-red-500 disabled:opacity-60 text-[#020c1b] font-black px-8 py-3 rounded-full text-sm transition-all flex items-center gap-2"
                 >
                   {submitting ? (
                     <>
@@ -666,7 +666,7 @@ export default function SchedulePage() {
             { icon: '📍', title: 'We Come to You', body: 'Our mobile unit travels to your location.' },
             { icon: '📋', title: 'Waiver Required', body: 'All clients need a signed waiver before sessions.' },
           ].map((item) => (
-            <div key={item.title} className="bg-[#071428] border border-sky-400/10 rounded-xl p-5 text-sm">
+            <div key={item.title} className="bg-[#071428] border border-red-500/10 rounded-xl p-5 text-sm">
               <div className="text-xl mb-2">{item.icon}</div>
               <div className="text-white font-semibold mb-1">{item.title}</div>
               <div className="text-slate-500">{item.body}</div>
