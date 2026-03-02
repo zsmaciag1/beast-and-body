@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -8,29 +9,15 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 36 36"
-                fill="none"
-                className="text-sky-400"
-              >
-                <circle cx="18" cy="18" r="17" stroke="currentColor" strokeWidth="1.5" />
-                <path
-                  d="M18 4 L18 32 M4 18 L32 18 M8.5 8.5 L27.5 27.5 M27.5 8.5 L8.5 27.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <circle cx="18" cy="18" r="3" fill="currentColor" />
-              </svg>
-              <div>
-                <div className="text-white font-bold text-lg leading-none tracking-wider">
-                  BEAST & BODY
-                </div>
-                <div className="text-sky-400 text-[10px] tracking-[0.2em] font-medium">
-                  MOBILE RECOVERY
-                </div>
+              <Image
+                src="/brand/logo.png"
+                alt="Beast and Body Logo"
+                width={64}
+                height={64}
+                className="rounded-xl"
+              />
+              <div className="text-sky-400 text-[10px] tracking-[0.2em] font-semibold uppercase">
+                Mobile Recovery
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">

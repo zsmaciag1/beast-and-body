@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -33,32 +34,17 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <svg
-                width="36"
-                height="36"
-                viewBox="0 0 36 36"
-                fill="none"
-                className="text-sky-400 group-hover:text-sky-300 transition-colors"
-              >
-                <circle cx="18" cy="18" r="17" stroke="currentColor" strokeWidth="1.5" />
-                <path
-                  d="M18 4 L18 32 M4 18 L32 18 M8.5 8.5 L27.5 27.5 M27.5 8.5 L8.5 27.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <circle cx="18" cy="18" r="3" fill="currentColor" />
-              </svg>
-            </div>
-            <div>
-              <div className="text-white font-bold text-lg leading-none tracking-wider">
-                BEAST & BODY
-              </div>
-              <div className="text-sky-400 text-[10px] tracking-[0.2em] font-medium">
-                MOBILE RECOVERY
-              </div>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Image
+              src="/brand/logo.png"
+              alt="Beast and Body Logo"
+              width={48}
+              height={48}
+              className="rounded-lg group-hover:opacity-90 transition-opacity"
+              priority
+            />
+            <div className="text-sky-400 text-[10px] tracking-[0.2em] font-semibold uppercase">
+              Mobile Recovery
             </div>
           </Link>
 
