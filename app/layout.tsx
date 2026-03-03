@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://beastandbody.co"),
   title: "Beast & Body Mobile Recovery | Cryotherapy for Humans & Horses",
   description:
     "Professional mobile cryotherapy services for humans and horses. Beast & Body brings cutting-edge cold therapy recovery directly to you. Book your session today.",

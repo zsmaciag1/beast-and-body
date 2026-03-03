@@ -32,24 +32,9 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 py-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <Image
-              src="/brand/logo.png"
-              alt="Beast and Body Logo"
-              width={48}
-              height={48}
-              className="rounded-lg group-hover:opacity-90 transition-opacity"
-              priority
-            />
-            <div className="text-red-500 text-[10px] tracking-[0.2em] font-semibold uppercase">
-              Mobile Recovery
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+        <div className="relative flex items-center justify-between py-4" style={{ minHeight: '380px' }}>
+          {/* Desktop Nav — left side */}
+          <div className="hidden md:flex items-center gap-8 z-10">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -68,43 +53,60 @@ export default function Navbar() {
                 />
               </Link>
             ))}
+          </div>
+
+          {/* Logo — absolutely centered */}
+          <Link
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 group"
+          >
+            <Image
+              src="/brand/logo.png"
+              alt="Beast and Body Logo"
+              width={360}
+              height={360}
+              className="rounded-xl group-hover:opacity-90 transition-opacity"
+              priority
+            />
+          </Link>
+
+          {/* Right side — Book Now + mobile menu button */}
+          <div className="flex items-center gap-4 z-10">
             <Link
               href="/schedule"
-              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-2 rounded-full text-sm transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 tracking-wide"
+              className="hidden md:block bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-2 rounded-full text-sm transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 tracking-wide"
             >
               Book Now
             </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden text-slate-300 hover:text-white p-2 transition-colors"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <button
+              className="md:hidden text-slate-300 hover:text-white p-2 transition-colors"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
             >
-              {menuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {menuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 

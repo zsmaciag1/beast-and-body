@@ -1,25 +1,5 @@
 import Link from 'next/link';
 
-function SnowflakeIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 36 36"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="18" cy="18" r="17" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M18 4 L18 32 M4 18 L32 18 M8.5 8.5 L27.5 27.5 M27.5 8.5 L8.5 27.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <circle cx="18" cy="18" r="3" fill="currentColor" />
-    </svg>
-  );
-}
-
 const humanBenefits = [
   'Accelerated muscle recovery',
   'Reduced inflammation & soreness',
@@ -82,23 +62,6 @@ export default function Home() {
               'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(239,68,68,0.12) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 80%, rgba(220,38,38,0.07) 0%, transparent 60%)',
           }}
         />
-
-        {/* Floating frost particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute opacity-10 frost-glow"
-              style={{
-                left: `${15 + i * 14}%`,
-                top: `${20 + (i % 3) * 25}%`,
-                animationDelay: `${i * 0.8}s`,
-              }}
-            >
-              <SnowflakeIcon className="text-red-500 w-8 h-8" />
-            </div>
-          ))}
-        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 pb-16">
           {/* Badge */}
