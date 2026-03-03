@@ -32,7 +32,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between pt-1 pb-4" style={{ minHeight: '380px' }}>
+        <div className="relative flex items-center justify-between pt-0.5 pb-2" style={{ minHeight: '370px' }}>
           {/* Desktop Nav — left side */}
           <div className="hidden md:flex items-center gap-8 z-10">
             {links.map((link) => (
