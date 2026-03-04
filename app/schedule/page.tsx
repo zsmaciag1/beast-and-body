@@ -53,8 +53,8 @@ export default function SchedulePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (submitted) window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [submitted]);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [step, submitted]);
 
   const isEquine =
     form.serviceType === 'equine' || form.serviceType === 'both';
