@@ -304,6 +304,21 @@ export default function SchedulePage() {
                   </button>
                 ))}
               </div>
+
+              {isEquine && (
+                <div className="bg-amber-400/5 border border-amber-400/25 rounded-xl p-4 mb-6 text-sm text-slate-300">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-amber-400 mb-1">A Note on Equine Treatments</p>
+                      <p className="text-slate-400 leading-relaxed">For the safety and comfort of both horse and handler, treatments are best suited for horses that are calm and comfortable with basic handling. The cryotherapy unit does produce a mild hissing sound during use. If you&apos;re unsure how your horse may react, please feel free to reach out beforehand and I&apos;d be happy to discuss whether treatment would be a good fit.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="flex justify-end">
                 <button
                   type="button"
