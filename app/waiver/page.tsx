@@ -661,7 +661,6 @@ export default function WaiverPage() {
                       ? 'border-red-500 bg-red-500'
                       : 'border-slate-600 group-hover:border-slate-500'
                   }`}
-                  onClick={() => setForm((p) => ({ ...p, agreedToWaiver: !p.agreedToWaiver }))}
                 >
                   {form.agreedToWaiver && (
                     <svg className="w-3 h-3 text-[#020c1b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -690,7 +689,6 @@ export default function WaiverPage() {
                       ? 'border-red-500 bg-red-500'
                       : 'border-slate-600 group-hover:border-slate-500'
                   }`}
-                  onClick={() => setForm((p) => ({ ...p, agreedToRisks: !p.agreedToRisks }))}
                 >
                   {form.agreedToRisks && (
                     <svg className="w-3 h-3 text-[#020c1b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -720,7 +718,6 @@ export default function WaiverPage() {
                         ? 'border-blue-400 bg-blue-400'
                         : 'border-slate-600 group-hover:border-slate-500'
                     }`}
-                    onClick={() => setForm((p) => ({ ...p, agreedToEquine: !p.agreedToEquine }))}
                   >
                     {form.agreedToEquine && (
                       <svg className="w-3 h-3 text-[#020c1b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
