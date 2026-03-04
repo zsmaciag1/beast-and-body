@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#222;">
         <h2 style="color:#dc2626;">Booking Request Received!</h2>
         <p>Hi ${body.firstName},</p>
-        <p>We've received your booking request and will confirm within 24 hours.</p>
+        <p>We've received your session request. Someone from our team will be in touch to confirm your appointment — please note that preferred dates and times are subject to availability.</p>
 
         <div style="background:#f9f9f9;border-left:4px solid #dc2626;padding:12px 16px;margin:20px 0;">
           <p style="margin:0;font-weight:bold;">Confirmation #: ${confirmationNumber}</p>

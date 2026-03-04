@@ -127,16 +127,16 @@ export default function SchedulePage() {
           </div>
           <h1 className="text-3xl font-black text-white mb-3">Request Submitted!</h1>
           <p className="text-slate-400 mb-4">
-            Your session request has been received. We&apos;ll confirm within 24 hours.
+            Your session request has been received. Someone from our team will call you to confirm your appointment — please note that preferred dates and times are subject to availability.
           </p>
           <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-5 mb-8">
             <div className="text-slate-400 text-sm mb-1">Confirmation Number</div>
             <div className="text-red-500 font-black text-2xl tracking-widest">{confirmationNumber}</div>
           </div>
           <p className="text-slate-500 text-sm mb-8">
-            A confirmation email will be sent to{' '}
+            A copy of your request has been sent to{' '}
             <span className="text-slate-300">{form.email}</span>. If you haven&apos;t
-            signed a waiver yet, please do so before your appointment.
+            signed a waiver yet, please do so before your session.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -176,8 +176,8 @@ export default function SchedulePage() {
             Book Your Session
           </h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            Fill out the form below and we&apos;ll confirm your appointment within 24 hours.
-            We come to you.
+            Submit your preferred date and time and we&apos;ll give you a call to confirm
+            availability. We come to you.
           </p>
         </div>
       </section>
@@ -619,7 +619,7 @@ export default function SchedulePage() {
               </div>
 
               <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4 mb-6 text-sm text-slate-400">
-                <strong className="text-red-500">Note:</strong> You will receive a confirmation email once we review and confirm your appointment. If you haven&apos;t already, please also{' '}
+                <strong className="text-red-500">Note:</strong> Your request will be sent to our team. Someone will call you to confirm your appointment — preferred dates and times are subject to availability. If you haven&apos;t already, please also{' '}
                 <Link href="/waiver" className="text-red-500 underline hover:text-red-400">sign your waiver</Link> before your session.
               </div>
 
