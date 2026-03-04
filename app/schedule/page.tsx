@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 type FormData = {
@@ -51,6 +51,10 @@ export default function SchedulePage() {
   const [submitted, setSubmitted] = useState(false);
   const [confirmationNumber, setConfirmationNumber] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (submitted) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [submitted]);
 
   const isEquine =
     form.serviceType === 'equine' || form.serviceType === 'both';
@@ -135,8 +139,8 @@ export default function SchedulePage() {
           </div>
           <p className="text-slate-500 text-sm mb-8">
             A copy of your request has been sent to{' '}
-            <span className="text-slate-300">{form.email}</span>. If you haven&apos;t
-            signed a waiver yet, please do so before your session.
+            <span className="text-slate-300">{form.email}</span>. If you don&apos;t see it, check your spam folder.
+            If you haven&apos;t signed a waiver yet, please do so before your session.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link

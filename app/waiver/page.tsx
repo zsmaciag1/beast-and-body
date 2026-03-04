@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 type FormData = {
@@ -83,6 +83,10 @@ export default function WaiverPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (submitted) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [submitted]);
 
   const isEquine = form.clientType === 'equine' || form.clientType === 'both';
 
@@ -176,7 +180,7 @@ export default function WaiverPage() {
             </div>
             <ul className="space-y-1.5">
               <li>• Your waiver is on file for all future sessions.</li>
-              <li>• You&apos;ll receive a copy at <span className="text-slate-300">{form.email}</span>.</li>
+              <li>• You&apos;ll receive a copy at <span className="text-slate-300">{form.email}</span> — check your spam if you don&apos;t see it.</li>
               <li>• Ready to book? Schedule your first session now.</li>
             </ul>
           </div>
