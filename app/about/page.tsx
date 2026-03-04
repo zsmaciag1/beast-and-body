@@ -16,7 +16,7 @@ const values = [
     ),
     title: 'Safety First',
     description:
-      'Every session follows strict protocols. Our technicians are trained, certified, and insured to deliver safe treatments for both humans and horses.',
+      'Every session follows strict protocols. Our technicians are trained and insured to deliver safe treatments for both humans and horses.',
   },
   {
     icon: (
@@ -135,7 +135,7 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <div className="text-white font-bold">Dual Expertise</div>
-                      <div className="text-slate-400 text-sm">Certified in human and equine therapy.</div>
+                      <div className="text-slate-400 text-sm">Expertise in human and equine therapy.</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -217,22 +217,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── CERTIFICATIONS ── */}
+      {/* ── CREDENTIALS ── */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-red-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               Credentials
             </p>
-            <h2 className="text-4xl font-black text-white">Trained & Certified</h2>
+            <h2 className="text-4xl font-black text-white">Trained & Insured</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {[
-              {
-                title: 'Cryotherapy Certification',
-                body: 'Formally trained and certified in localized and targeted cryotherapy techniques for human clients.',
-                accent: 'sky',
-              },
               {
                 title: 'Equine Sports Medicine',
                 body: 'Specialized training in equine anatomy, physiology, and therapeutic cold application for performance horses.',
