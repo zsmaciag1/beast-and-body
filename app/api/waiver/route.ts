@@ -100,13 +100,13 @@ export async function POST(req: NextRequest) {
     // Send to owner (critical) and client (best-effort) in parallel
     const [ownerResult, clientResult] = await Promise.allSettled([
       resend.emails.send({
-        from: 'Beast & Body Waivers <onboarding@resend.dev>',
+        from: 'Beast & Body Waivers <noreply@beastandbody.co>',
         to: RECIPIENT,
         subject: `New Waiver: ${body.fullName} — ${new Date().toLocaleDateString()}`,
         html: ownerHtml,
       }),
       resend.emails.send({
-        from: 'Beast & Body Waivers <onboarding@resend.dev>',
+        from: 'Beast & Body Waivers <noreply@beastandbody.co>',
         to: body.email,
         subject: 'Your Beast & Body Waiver is Confirmed',
         html: clientHtml,
