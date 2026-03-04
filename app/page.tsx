@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import WaiverCheckLink from './components/WaiverCheckLink';
 
 const humanBenefits = [
   'Accelerated muscle recovery',
@@ -85,12 +86,9 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href="/schedule"
-              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30 hover:-translate-y-0.5 w-full sm:w-auto"
-            >
+            <WaiverCheckLink className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30 hover:-translate-y-0.5 w-full sm:w-auto">
               Book Your Session →
-            </Link>
+            </WaiverCheckLink>
             <Link
               href="/about"
               className="border border-red-500/30 hover:border-red-500/60 text-red-400 hover:text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200 hover:bg-red-500/5 w-full sm:w-auto"
@@ -163,13 +161,10 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href="/schedule"
-                  className="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-semibold text-sm transition-colors group-hover:gap-3"
-                >
+                <WaiverCheckLink className="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-semibold text-sm transition-colors group-hover:gap-3">
                   Book Human Session
                   <span>→</span>
-                </Link>
+                </WaiverCheckLink>
               </div>
             </div>
 
@@ -206,13 +201,10 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href="/schedule"
-                  className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold text-sm transition-colors group-hover:gap-3"
-                >
+                <WaiverCheckLink className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold text-sm transition-colors group-hover:gap-3">
                   Book Equine Session
                   <span>→</span>
-                </Link>
+                </WaiverCheckLink>
               </div>
             </div>
           </div>
@@ -273,12 +265,9 @@ export default function Home() {
               <p className="text-slate-400 leading-relaxed mb-8">
                 The same principles that apply to human athletes work for performance horses. Cold therapy reduces metabolic demand in damaged tissue, decreases inflammation, and promotes circulation upon rewarming — all without drugs or invasive procedures.
               </p>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-7 py-3.5 rounded-full text-sm tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25"
-              >
+              <WaiverCheckLink className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-7 py-3.5 rounded-full text-sm tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25">
                 Start Your Recovery Today
-              </Link>
+              </WaiverCheckLink>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -331,12 +320,9 @@ export default function Home() {
                 Book a session for yourself, your horse, or both. We&apos;ll come to you.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/schedule"
-                  className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30"
-                >
+                <WaiverCheckLink className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30">
                   Book a Session
-                </Link>
+                </WaiverCheckLink>
                 <Link
                   href="/waiver"
                   className="border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200"

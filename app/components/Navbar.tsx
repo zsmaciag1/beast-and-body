@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import WaiverCheckLink from './WaiverCheckLink';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -72,12 +73,9 @@ export default function Navbar() {
 
           {/* Right side — Book Now + mobile menu button */}
           <div className="flex items-center gap-4 z-10">
-            <Link
-              href="/schedule"
-              className="hidden md:block bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-2 rounded-full text-sm transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 tracking-wide"
-            >
+            <WaiverCheckLink className="hidden md:block bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-2 rounded-full text-sm transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 tracking-wide">
               Book Now
-            </Link>
+            </WaiverCheckLink>
             <button
               className="md:hidden text-slate-300 hover:text-white p-2 transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -131,13 +129,12 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/schedule"
+          <WaiverCheckLink
             className="mt-4 block text-center bg-red-600 hover:bg-red-500 text-[#020c1b] font-bold px-5 py-3 rounded-full text-sm transition-colors tracking-wide"
-            onClick={() => setMenuOpen(false)}
+            onBeforeOpen={() => setMenuOpen(false)}
           >
             Book Now
-          </Link>
+          </WaiverCheckLink>
         </div>
       </div>
     </nav>

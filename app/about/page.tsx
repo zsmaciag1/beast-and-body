@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import WaiverCheckLink from '../components/WaiverCheckLink';
 
 export const metadata: Metadata = {
   title: 'About | Beast & Body Mobile Recovery',
@@ -177,12 +178,9 @@ export default function AboutPage() {
               <p className="text-slate-400 leading-relaxed mb-8">
                 We are passionate about the animals in our care. Every equine session is conducted with patience, expertise, and a genuine love for horses. We understand that your horse isn&apos;t just an animal — it&apos;s a partner, an athlete, and a member of your family.
               </p>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-7 py-3.5 rounded-full text-sm tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25"
-              >
+              <WaiverCheckLink className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-7 py-3.5 rounded-full text-sm tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25">
                 Book a Session Today
-              </Link>
+              </WaiverCheckLink>
             </div>
           </div>
         </div>
@@ -300,12 +298,9 @@ export default function AboutPage() {
             Book your session online or sign your waiver before your first appointment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/schedule"
-              className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30"
-            >
+            <WaiverCheckLink className="bg-red-600 hover:bg-red-500 text-[#020c1b] font-black px-8 py-4 rounded-full text-base tracking-wide transition-all duration-200 hover:shadow-xl hover:shadow-red-500/30">
               Book a Session
-            </Link>
+            </WaiverCheckLink>
             <Link
               href="/waiver"
               className="border border-red-500/30 hover:border-red-500 text-red-500 hover:text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200"
