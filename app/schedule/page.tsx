@@ -86,6 +86,8 @@ const SERVICE_CATALOG: ServiceEntry[] = [
   },
 ];
 
+type TravelInfo = { miles: number; fee: number; waived: boolean };
+
 type FormData = {
   serviceId: string;
   additionalAreas: number;
@@ -99,6 +101,7 @@ type FormData = {
   serviceAddress: string;
   city: string;
   state: string;
+  zip: string;
   notes: string;
   horseName: string;
   horseBreed: string;
@@ -121,6 +124,7 @@ const initialForm: FormData = {
   serviceAddress: '',
   city: '',
   state: '',
+  zip: '',
   notes: '',
   horseName: '',
   horseBreed: '',
@@ -137,10 +141,39 @@ export default function SchedulePage() {
   const [submitted, setSubmitted] = useState(false);
   const [confirmationNumber, setConfirmationNumber] = useState('');
   const [error, setError] = useState('');
+  const [travelInfo, setTravelInfo] = useState<TravelInfo | null>(null);
+  const [travelLoading, setTravelLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [step, submitted]);
+
+  // Auto-calculate travel fee when zip changes
+  useEffect(() => {
+    if (!/^\d{5}$/.test(form.zip)) {
+      setTravelInfo(null);
+      return;
+    }
+    setTravelLoading(true);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/travel-fee?zip=${form.zip}`);
+        if (res.ok) {
+          setTravelInfo(await res.json());
+        } else {
+          setTravelInfo(null);
+        }
+      } catch {
+        setTravelInfo(null);
+      } finally {
+        setTravelLoading(false);
+      }
+    }, 600);
+    return () => {
+      clearTimeout(timer);
+      setTravelLoading(false);
+    };
+  }, [form.zip]);
 
   const selectedService = SERVICE_CATALOG.find(s => s.id === form.serviceId);
   const isEquine =
@@ -150,7 +183,7 @@ export default function SchedulePage() {
     setForm(prev => ({ ...prev, serviceId: id, additionalAreas: 0, equineSpotTierIndex: 0 }));
   }
 
-  function calculateTotal(): number {
+  function calculateSubtotal(): number {
     if (!selectedService) return 0;
     if (selectedService.tiers) {
       const tierPrice =
@@ -162,6 +195,10 @@ export default function SchedulePage() {
       (selectedService.basePrice ?? 0) +
       form.additionalAreas * (selectedService.additionalAreaPrice ?? 0)
     );
+  }
+
+  function calculateGrandTotal(): number {
+    return calculateSubtotal() + (travelInfo?.fee ?? 0);
   }
 
   function handleChange(
@@ -184,7 +221,8 @@ export default function SchedulePage() {
       form.preferredTime !== '' &&
       form.serviceAddress.trim() !== '' &&
       form.city.trim() !== '' &&
-      form.state.trim() !== ''
+      form.state.trim() !== '' &&
+      /^\d{5}$/.test(form.zip)
     );
   }
 
@@ -208,7 +246,10 @@ export default function SchedulePage() {
         body: JSON.stringify({
           ...form,
           serviceName: selectedService?.name ?? '',
-          estimatedTotal: calculateTotal(),
+          estimatedSubtotal: calculateSubtotal(),
+          travelFee: travelInfo?.fee ?? null,
+          travelWaived: travelInfo?.waived ?? false,
+          estimatedTotal: calculateGrandTotal(),
         }),
       });
       const data = await res.json();
@@ -518,14 +559,14 @@ export default function SchedulePage() {
                 </div>
               </div>
 
-              {/* Estimated total */}
+              {/* Estimated subtotal */}
               {selectedService && (
                 <div className="bg-[#0a1e38] border border-red-500/20 rounded-xl px-5 py-4 mb-6 flex items-center justify-between">
                   <div>
-                    <div className="text-slate-300 text-sm font-semibold">Estimated Total</div>
-                    <div className="text-slate-500 text-xs mt-0.5">Travel fee not included</div>
+                    <div className="text-slate-300 text-sm font-semibold">Estimated Subtotal</div>
+                    <div className="text-slate-500 text-xs mt-0.5">Enter your zip in Step 2 to calculate travel fee</div>
                   </div>
-                  <div className="text-white font-black text-2xl">${calculateTotal()}</div>
+                  <div className="text-white font-black text-2xl">${calculateSubtotal()}</div>
                 </div>
               )}
 
@@ -682,7 +723,7 @@ export default function SchedulePage() {
                     type="text"
                     value={form.city}
                     onChange={handleChange}
-                    placeholder="Springfield"
+                    placeholder="New River"
                     required
                     className={inputClass}
                   />
@@ -695,12 +736,50 @@ export default function SchedulePage() {
                     type="text"
                     value={form.state}
                     onChange={handleChange}
-                    placeholder="TX"
+                    placeholder="AZ"
                     maxLength={2}
                     required
                     className={inputClass}
                   />
                 </div>
+              </div>
+
+              {/* Zip code + travel fee */}
+              <div className="mb-4">
+                <label className={labelClass} htmlFor="zip">Zip Code *</label>
+                <input
+                  id="zip"
+                  name="zip"
+                  type="text"
+                  inputMode="numeric"
+                  value={form.zip}
+                  onChange={handleChange}
+                  placeholder="85086"
+                  maxLength={5}
+                  required
+                  className={inputClass}
+                />
+                {/* Travel fee indicator */}
+                {form.zip.length > 0 && (
+                  <div className="mt-2 text-xs">
+                    {travelLoading ? (
+                      <span className="text-slate-500">Calculating travel fee...</span>
+                    ) : form.zip.length === 5 ? (
+                      travelInfo ? (
+                        travelInfo.waived ? (
+                          <span className="text-emerald-400">Within service area (85086) — no travel fee</span>
+                        ) : (
+                          <span className="text-slate-400">
+                            ~{travelInfo.miles} miles from home base — estimated travel fee:{' '}
+                            <span className="text-white font-semibold">${travelInfo.fee}</span>
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-slate-500">Travel fee will be confirmed when we call to book</span>
+                      )
+                    ) : null}
+                  </div>
+                )}
               </div>
 
               {/* Equine fields */}
@@ -840,23 +919,50 @@ export default function SchedulePage() {
               <div className="space-y-3 mb-8">
                 {[
                   { label: 'Service', value: selectedService?.name ?? '' },
-                  { label: 'Est. Total', value: `$${calculateTotal()} (+ travel fee)` },
                   { label: 'Name', value: `${form.firstName} ${form.lastName}` },
                   { label: 'Email', value: form.email },
                   { label: 'Phone', value: form.phone },
                   { label: 'Date', value: new Date(form.preferredDate + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) },
                   { label: 'Time', value: form.preferredTime },
-                  { label: 'Address', value: `${form.serviceAddress}, ${form.city}, ${form.state}` },
+                  { label: 'Address', value: `${form.serviceAddress}, ${form.city}, ${form.state} ${form.zip}` },
                   ...(isEquine ? [
                     { label: 'Horse', value: `${form.horseName} (${form.horseBreed}${form.horseAge ? `, ${form.horseAge} yrs` : ''})` },
                   ] : []),
                   ...(form.notes ? [{ label: 'Notes', value: form.notes }] : []),
                 ].map((item) => (
                   <div key={item.label} className="flex gap-3 py-2.5 border-b border-slate-800">
-                    <span className="text-slate-500 text-sm w-24 shrink-0">{item.label}</span>
+                    <span className="text-slate-500 text-sm w-20 shrink-0">{item.label}</span>
                     <span className="text-slate-200 text-sm">{item.value}</span>
                   </div>
                 ))}
+              </div>
+
+              {/* Pricing breakdown */}
+              <div className="bg-[#0a1e38] border border-red-500/15 rounded-xl p-4 mb-6">
+                <div className="flex justify-between items-center py-1.5">
+                  <span className="text-slate-400 text-sm">Subtotal</span>
+                  <span className="text-slate-200 text-sm font-semibold">${calculateSubtotal()}</span>
+                </div>
+                <div className="flex justify-between items-center py-1.5 border-t border-slate-800">
+                  <span className="text-slate-400 text-sm">Travel Fee</span>
+                  <span className={`text-sm font-semibold ${travelInfo?.waived ? 'text-emerald-400' : 'text-slate-200'}`}>
+                    {travelLoading
+                      ? 'Calculating...'
+                      : travelInfo
+                        ? travelInfo.waived
+                          ? 'Waived'
+                          : `$${travelInfo.fee}`
+                        : 'TBD'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-1.5 border-t border-slate-700 mt-1">
+                  <span className="text-white text-sm font-bold">Est. Total</span>
+                  <span className="text-red-500 font-black text-lg">
+                    {travelInfo
+                      ? `$${calculateGrandTotal()}`
+                      : `$${calculateSubtotal()} + travel`}
+                  </span>
+                </div>
               </div>
 
               <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4 mb-6 text-sm text-slate-400">

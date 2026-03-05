@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const required = ['serviceId', 'firstName', 'lastName', 'email', 'phone', 'preferredDate', 'preferredTime', 'serviceAddress', 'city', 'state'];
+    const required = ['serviceId', 'firstName', 'lastName', 'email', 'phone', 'preferredDate', 'preferredTime', 'serviceAddress', 'city', 'state', 'zip'];
     for (const field of required) {
       if (body[field] === undefined || body[field] === null || String(body[field]).trim() === '') {
         return NextResponse.json({ error: `Missing required field: ${field}` }, { status: 400 });
@@ -23,19 +23,31 @@ export async function POST(req: NextRequest) {
     const confirmationNumber = generateConfirmationNumber();
     const submittedAt = new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' });
 
+    const travelLine = body.travelWaived
+      ? 'Waived (within 85086)'
+      : body.travelFee != null
+      ? `$${body.travelFee}`
+      : 'TBD';
+
     const ownerHtml = `
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#222;">
         <h2 style="color:#dc2626;">New Booking Request — ${confirmationNumber}</h2>
         <p style="color:#666;">Submitted: ${submittedAt} (Arizona)</p>
 
-        <h3>Service</h3>
+        <h3>Service & Pricing</h3>
         <table style="width:100%;border-collapse:collapse;">
           <tr><td style="padding:4px 8px;font-weight:bold;">Service</td><td style="padding:4px 8px;">${body.serviceName || body.serviceId}</td></tr>
-          ${body.estimatedTotal ? `<tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Est. Total</td><td style="padding:4px 8px;">$${body.estimatedTotal} (+ travel fee)</td></tr>` : ''}
+          <tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Subtotal</td><td style="padding:4px 8px;">$${body.estimatedSubtotal ?? '—'}</td></tr>
+          <tr><td style="padding:4px 8px;font-weight:bold;">Travel Fee</td><td style="padding:4px 8px;">${travelLine}</td></tr>
+          <tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;color:#dc2626;">Est. Total</td><td style="padding:4px 8px;font-weight:bold;color:#dc2626;">$${body.estimatedTotal ?? '—'}</td></tr>
+        </table>
+
+        <h3>Appointment</h3>
+        <table style="width:100%;border-collapse:collapse;">
           <tr><td style="padding:4px 8px;font-weight:bold;">Date</td><td style="padding:4px 8px;">${body.preferredDate}</td></tr>
-          <tr><td style="padding:4px 8px;font-weight:bold;">Time</td><td style="padding:4px 8px;">${body.preferredTime}</td></tr>
-          <tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Location</td><td style="padding:4px 8px;">${body.serviceAddress}, ${body.city}, ${body.state}</td></tr>
-          ${body.notes ? `<tr><td style="padding:4px 8px;font-weight:bold;">Notes</td><td style="padding:4px 8px;">${body.notes}</td></tr>` : ''}
+          <tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Time</td><td style="padding:4px 8px;">${body.preferredTime}</td></tr>
+          <tr><td style="padding:4px 8px;font-weight:bold;">Location</td><td style="padding:4px 8px;">${body.serviceAddress}, ${body.city}, ${body.state} ${body.zip}</td></tr>
+          ${body.notes ? `<tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Notes</td><td style="padding:4px 8px;">${body.notes}</td></tr>` : ''}
         </table>
 
         <h3>Client</h3>
@@ -56,9 +68,11 @@ export async function POST(req: NextRequest) {
         <div style="background:#f9f9f9;border-left:4px solid #dc2626;padding:12px 16px;margin:20px 0;">
           <p style="margin:0;font-weight:bold;">Confirmation #: ${confirmationNumber}</p>
           <p style="margin:8px 0 0;">Service: ${body.serviceName || body.serviceId}</p>
-          ${body.estimatedTotal ? `<p style="margin:4px 0;">Estimated Total: $${body.estimatedTotal} (+ travel fee)</p>` : ''}
-          <p style="margin:4px 0;">Requested Date: ${body.preferredDate} at ${body.preferredTime}</p>
-          <p style="margin:4px 0;">Location: ${body.serviceAddress}, ${body.city}, ${body.state}</p>
+          <p style="margin:4px 0;">Subtotal: $${body.estimatedSubtotal ?? '—'}</p>
+          <p style="margin:4px 0;">Travel Fee: ${travelLine}</p>
+          <p style="margin:4px 0;font-weight:bold;">Estimated Total: $${body.estimatedTotal ?? '—'}</p>
+          <p style="margin:8px 0 0;">Requested Date: ${body.preferredDate} at ${body.preferredTime}</p>
+          <p style="margin:4px 0;">Location: ${body.serviceAddress}, ${body.city}, ${body.state} ${body.zip}</p>
         </div>
 
         <p>Questions? Reach us at <a href="mailto:jen.beastandbody@gmail.com">jen.beastandbody@gmail.com</a> or <a href="tel:+14802397486">480-239-7486</a>.</p>
