@@ -136,6 +136,7 @@ const initialForm: FormData = {
 
 export default function SchedulePage() {
   const [form, setForm] = useState<FormData>(initialForm);
+  const [serviceCategory, setServiceCategory] = useState<'human' | 'equine' | 'both' | ''>('');
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -179,6 +180,11 @@ export default function SchedulePage() {
   const isEquine =
     selectedService?.category === 'equine' || selectedService?.category === 'barn';
 
+  function selectCategory(cat: 'human' | 'equine' | 'both') {
+    setServiceCategory(cat);
+    setForm(prev => ({ ...prev, serviceId: '', additionalAreas: 0, equineSpotTierIndex: 0 }));
+  }
+
   function selectService(id: string) {
     setForm(prev => ({ ...prev, serviceId: id, additionalAreas: 0, equineSpotTierIndex: 0 }));
   }
@@ -208,7 +214,7 @@ export default function SchedulePage() {
   }
 
   function validateStep1() {
-    return form.serviceId !== '';
+    return serviceCategory !== '' && form.serviceId !== '';
   }
 
   function validateStep2() {
@@ -390,11 +396,37 @@ export default function SchedulePage() {
           {step === 1 && (
             <div>
               <h2 className="text-2xl font-black text-white mb-2">Select a Service</h2>
-              <p className="text-slate-400 text-sm mb-8">
+              <p className="text-slate-400 text-sm mb-6">
                 Choose what you&apos;d like to book. Prices shown are estimates — a travel fee may apply.
               </p>
 
-              {/* Human Cryotherapy */}
+              {/* Category picker */}
+              <div className="grid grid-cols-3 gap-3 mb-8">
+                {([
+                  { value: 'human' as const, label: 'Human', sub: 'Cryotherapy', accent: 'red' },
+                  { value: 'equine' as const, label: 'Equine', sub: 'Cryotherapy', accent: 'amber' },
+                  { value: 'both' as const, label: 'Both', sub: 'Human & Equine', accent: 'red' },
+                ] as const).map(opt => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => selectCategory(opt.value)}
+                    className={`rounded-xl p-4 border-2 text-center transition-all duration-150 ${
+                      serviceCategory === opt.value
+                        ? opt.accent === 'amber'
+                          ? 'border-amber-400 bg-amber-400/10'
+                          : 'border-red-500 bg-red-500/10'
+                        : 'border-slate-700 hover:border-slate-500 bg-transparent'
+                    }`}
+                  >
+                    <div className={`text-sm font-bold ${serviceCategory === opt.value ? (opt.accent === 'amber' ? 'text-amber-400' : 'text-red-500') : 'text-white'}`}>{opt.label}</div>
+                    <div className="text-slate-500 text-xs mt-0.5">{opt.sub}</div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Human Cryotherapy — visible for human or both */}
+              {(serviceCategory === 'human' || serviceCategory === 'both') && (
               <div className="mb-8">
                 <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
                   <span className="text-red-500 mr-2">—</span>Human Cryotherapy
@@ -450,8 +482,10 @@ export default function SchedulePage() {
                   })}
                 </div>
               </div>
+              )} {/* end human section */}
 
-              {/* Equine Cryotherapy */}
+              {/* Equine Cryotherapy — visible for equine or both */}
+              {(serviceCategory === 'equine' || serviceCategory === 'both') && (
               <div className="mb-8">
                 <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
                   <span className="text-amber-400 mr-2">—</span>Equine Cryotherapy
@@ -525,8 +559,10 @@ export default function SchedulePage() {
                   })}
                 </div>
               </div>
+              )} {/* end equine section */}
 
-              {/* Barn Packages */}
+              {/* Barn Packages — visible for equine or both */}
+              {(serviceCategory === 'equine' || serviceCategory === 'both') && (
               <div className="mb-8">
                 <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
                   <span className="text-red-500 mr-2">—</span>Barn Day Packages
@@ -558,6 +594,7 @@ export default function SchedulePage() {
                   })}
                 </div>
               </div>
+              )} {/* end barn section */}
 
               {/* Estimated subtotal */}
               {selectedService && (
