@@ -278,7 +278,7 @@ export default function SchedulePage() {
 
   if (submitted) {
     return (
-      <div className="px-4 py-10 sm:py-20">
+      <div className="px-6 py-10 sm:py-20">
         <div className="max-w-lg w-full text-center mx-auto">
           <div className="w-20 h-20 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-6">
             <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
