@@ -146,11 +146,13 @@ export default function ServicesPage() {
               <p className="text-slate-500 text-xs mt-2">+$45/horse · +$15/area</p>
             </div>
 
-            <div className="bg-[#071428] border border-amber-500/20 rounded-2xl p-6 hover:border-amber-500/30 transition-colors relative overflow-hidden">
-              <div className="absolute top-3 right-3 bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold px-2 py-0.5 rounded-full">Popular</div>
-              <div className="flex items-start justify-between gap-2 mb-3">
+            <div className="bg-[#071428] border border-amber-500/20 rounded-2xl p-6 hover:border-amber-500/30 transition-colors">
+              <div className="flex items-center justify-between gap-2 mb-3">
                 <h3 className="text-white font-bold text-base">Competition Package</h3>
-                <span className="text-red-500 font-black text-xl flex-shrink-0">$300</span>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold px-2 py-0.5 rounded-full">Popular</span>
+                  <span className="text-red-500 font-black text-xl">$300</span>
+                </div>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed">Up to 6 horses · 2 areas each</p>
               <p className="text-slate-500 text-xs mt-2">+$45/horse · +$15/area</p>
