@@ -34,7 +34,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between pt-0.5 pb-1.5" style={{ minHeight: '278px' }}>
+        <div className="relative flex items-center justify-between pt-0.5 pb-1.5 min-h-[168px] sm:min-h-[278px]">
           {/* Desktop Nav — left side */}
           <div className="hidden md:flex items-center gap-8 z-10">
             {links.map((link) => (
@@ -67,7 +67,7 @@ export default function Navbar() {
               alt="Beast and Body Logo"
               width={270}
               height={270}
-              className="rounded-xl group-hover:opacity-90 transition-opacity"
+              className="rounded-xl group-hover:opacity-90 transition-opacity w-[160px] sm:w-[270px] h-auto"
               priority
             />
           </Link>

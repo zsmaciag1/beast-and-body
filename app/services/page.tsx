@@ -9,7 +9,7 @@ const travelNote = 'A travel fee of $1/mile applies for locations beyond 85086. 
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-[#020c1b] pt-[200px] pb-20 px-4">
+    <div className="min-h-screen bg-[#020c1b] pt-8 sm:pt-16 pb-20 px-4">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
@@ -205,6 +205,6 @@ export default function ServicesPage() {
         </div>
 
       </div>
-    </main>
+    </div>
   );
 }
