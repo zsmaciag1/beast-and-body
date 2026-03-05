@@ -1,8 +1,8 @@
 import WaiverCheckLink from '../components/WaiverCheckLink';
 
 export const metadata = {
-  title: 'Services & Pricing | Beast & Body',
-  description: 'Mobile cryotherapy services for humans and horses. Spot treatment, athlete recovery, equine performance packages, and barn day rates.',
+  title: 'Cryotherapy Services & Pricing | North Phoenix, AZ',
+  description: 'Mobile cryotherapy services in North Phoenix, New River, Anthem, and Cave Creek, AZ. Spot treatment, athlete recovery, equine performance packages, and barn day rates. We come to you.',
 };
 
 const travelNote = 'A travel fee of $1/mile applies for locations beyond 85086. This fee may be waived for multi-horse appointments — ask when booking.';

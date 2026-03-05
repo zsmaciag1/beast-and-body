@@ -3,9 +3,9 @@ import Link from 'next/link';
 import WaiverCheckLink from '../components/WaiverCheckLink';
 
 export const metadata: Metadata = {
-  title: 'About | Beast & Body Mobile Recovery',
+  title: 'About Us | Mobile Cryotherapy in North Phoenix, AZ',
   description:
-    'Learn about Beast & Body Mobile Recovery — who we are, our mission, and why we are passionate about cryotherapy for humans and horses.',
+    'Learn about Beast & Body — a mobile cryotherapy service based in New River, AZ serving North Phoenix, Anthem, Cave Creek, and surrounding communities.',
 };
 
 const values = [
