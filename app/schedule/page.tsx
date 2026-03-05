@@ -3,8 +3,93 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+// --- Service Catalog ---
+type ServiceTier = { label: string; price: number };
+
+type ServiceEntry = {
+  id: string;
+  name: string;
+  category: 'human' | 'equine' | 'barn';
+  description: string;
+  basePrice?: number;
+  additionalAreaPrice?: number;
+  tiers?: ServiceTier[];
+  barnNote?: string;
+};
+
+const SERVICE_CATALOG: ServiceEntry[] = [
+  {
+    id: 'spot-human',
+    name: 'Spot Cryotherapy',
+    category: 'human',
+    description: 'Targeted cold therapy for a specific area of pain, inflammation, or injury.',
+    basePrice: 35,
+    additionalAreaPrice: 15,
+  },
+  {
+    id: 'athlete-recovery',
+    name: 'Athlete Recovery Cryotherapy',
+    category: 'human',
+    description: 'Full-body recovery covering 4–5 major treatment areas (~5–7 min).',
+    basePrice: 75,
+  },
+  {
+    id: 'spot-equine',
+    name: 'Equine Spot Cryotherapy',
+    category: 'equine',
+    description: 'Targeted treatment for tendons, ligaments, hocks, and soft-tissue structures.',
+    tiers: [
+      { label: '1 Area', price: 45 },
+      { label: '2 Areas', price: 60 },
+      { label: '3 Areas', price: 75 },
+      { label: 'Full Leg', price: 90 },
+    ],
+    additionalAreaPrice: 20,
+  },
+  {
+    id: 'equine-performance',
+    name: 'Equine Performance / Show Prep',
+    category: 'equine',
+    description: '6–8 treatment points per horse (~5–8 min). Ideal for show day or the day before.',
+    basePrice: 95,
+  },
+  {
+    id: 'tendon-recovery',
+    name: 'Tendon & Suspensory Recovery',
+    category: 'equine',
+    description: 'Focused protocol for tendons, suspensory ligaments, and hock structures.',
+    basePrice: 85,
+  },
+  {
+    id: 'barn-performance',
+    name: 'Performance Barn Package',
+    category: 'barn',
+    description: 'Up to 4 horses · 2 areas each',
+    basePrice: 180,
+    barnNote: '+$45/horse · +$15/area',
+  },
+  {
+    id: 'barn-competition',
+    name: 'Competition Barn Package',
+    category: 'barn',
+    description: 'Up to 6 horses · 2 areas each',
+    basePrice: 300,
+    barnNote: '+$45/horse · +$15/area',
+  },
+  {
+    id: 'barn-full',
+    name: 'Full Barn Recovery Day',
+    category: 'barn',
+    description: 'Up to 10 horses · 2 areas each',
+    basePrice: 500,
+    barnNote: '+$45/horse · +$15/area',
+  },
+];
+
 type FormData = {
-  serviceType: string;
+  serviceId: string;
+  additionalAreas: number;
+  equineSpotTierIndex: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -15,7 +100,6 @@ type FormData = {
   city: string;
   state: string;
   notes: string;
-  // Equine fields
   horseName: string;
   horseBreed: string;
   horseAge: string;
@@ -25,7 +109,9 @@ type FormData = {
 };
 
 const initialForm: FormData = {
-  serviceType: '',
+  serviceId: '',
+  additionalAreas: 0,
+  equineSpotTierIndex: 0,
   firstName: '',
   lastName: '',
   email: '',
@@ -56,17 +142,36 @@ export default function SchedulePage() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [step, submitted]);
 
+  const selectedService = SERVICE_CATALOG.find(s => s.id === form.serviceId);
   const isEquine =
-    form.serviceType === 'equine' || form.serviceType === 'both';
+    selectedService?.category === 'equine' || selectedService?.category === 'barn';
+
+  function selectService(id: string) {
+    setForm(prev => ({ ...prev, serviceId: id, additionalAreas: 0, equineSpotTierIndex: 0 }));
+  }
+
+  function calculateTotal(): number {
+    if (!selectedService) return 0;
+    if (selectedService.tiers) {
+      const tierPrice =
+        selectedService.tiers[form.equineSpotTierIndex]?.price ??
+        selectedService.tiers[0].price;
+      return tierPrice + form.additionalAreas * (selectedService.additionalAreaPrice ?? 0);
+    }
+    return (
+      (selectedService.basePrice ?? 0) +
+      form.additionalAreas * (selectedService.additionalAreaPrice ?? 0)
+    );
+  }
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   function validateStep1() {
-    return form.serviceType !== '';
+    return form.serviceId !== '';
   }
 
   function validateStep2() {
@@ -100,7 +205,11 @@ export default function SchedulePage() {
       const res = await fetch('/api/schedule', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          serviceName: selectedService?.name ?? '',
+          estimatedTotal: calculateTotal(),
+        }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -235,89 +344,201 @@ export default function SchedulePage() {
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <div className="bg-[#071428] border border-red-500/10 rounded-2xl p-7 sm:p-10">
-          {/* STEP 1: Service Type */}
+
+          {/* STEP 1: Service Selection */}
           {step === 1 && (
             <div>
               <h2 className="text-2xl font-black text-white mb-2">Select a Service</h2>
               <p className="text-slate-400 text-sm mb-8">
-                What type of cryotherapy session are you looking for?
+                Choose what you&apos;d like to book. Prices shown are estimates — a travel fee may apply.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                {[
-                  {
-                    value: 'human',
-                    label: 'Human',
-                    sublabel: 'Cryotherapy',
-                    icon: (
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    ),
-                    accent: 'sky',
-                  },
-                  {
-                    value: 'equine',
-                    label: 'Equine',
-                    sublabel: 'Cryotherapy',
-                    icon: (
-                      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                      </svg>
-                    ),
-                    accent: 'amber',
-                  },
-                  {
-                    value: 'both',
-                    label: 'Both',
-                    sublabel: 'Human & Equine',
-                    icon: (
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    ),
-                    accent: 'sky',
-                  },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() =>
-                      setForm((prev) => ({ ...prev, serviceType: option.value }))
-                    }
-                    className={`rounded-xl p-6 border-2 text-left transition-all duration-200 ${
-                      form.serviceType === option.value
-                        ? option.accent === 'sky'
-                          ? 'border-red-500 bg-red-500/10'
-                          : 'border-blue-400 bg-blue-400/10'
-                        : 'border-slate-700 bg-transparent hover:border-slate-600'
-                    }`}
-                  >
-                    <div
-                      className={`mb-3 ${
-                        form.serviceType === option.value
-                          ? option.accent === 'sky'
-                            ? 'text-red-500'
-                            : 'text-blue-400'
-                          : 'text-slate-500'
-                      }`}
-                    >
-                      {option.icon}
-                    </div>
-                    <div className="text-white font-bold">{option.label}</div>
-                    <div className="text-slate-400 text-xs mt-1">{option.sublabel}</div>
-                  </button>
-                ))}
+
+              {/* Human Cryotherapy */}
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                  <span className="text-red-500 mr-2">—</span>Human Cryotherapy
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {SERVICE_CATALOG.filter(s => s.category === 'human').map(service => {
+                    const sel = form.serviceId === service.id;
+                    return (
+                      <div key={service.id}>
+                        <button
+                          type="button"
+                          onClick={() => selectService(service.id)}
+                          className={`w-full text-left rounded-xl p-5 border-2 transition-all duration-150 ${
+                            sel
+                              ? 'border-red-500 bg-red-500/10'
+                              : 'border-slate-700 hover:border-slate-500 bg-transparent'
+                          }`}
+                        >
+                          <div className="flex justify-between items-start gap-3">
+                            <div className="flex-1">
+                              <div className="text-white font-bold text-sm mb-1">{service.name}</div>
+                              <div className="text-slate-400 text-xs leading-relaxed">{service.description}</div>
+                            </div>
+                            <div className="text-right flex-shrink-0">
+                              <div className="text-red-500 font-black">${service.basePrice}</div>
+                              {service.additionalAreaPrice && (
+                                <div className="text-slate-500 text-xs">+${service.additionalAreaPrice}/area</div>
+                              )}
+                            </div>
+                          </div>
+                        </button>
+                        {/* Additional areas stepper for Spot Cryotherapy */}
+                        {sel && service.additionalAreaPrice && (
+                          <div className="mt-2 bg-slate-800/60 border border-slate-700/50 rounded-lg px-4 py-3 flex items-center justify-between">
+                            <span className="text-slate-400 text-xs">Additional areas (+${service.additionalAreaPrice} each)</span>
+                            <div className="flex items-center gap-3">
+                              <button
+                                type="button"
+                                onClick={() => setForm(p => ({ ...p, additionalAreas: Math.max(0, p.additionalAreas - 1) }))}
+                                className="w-7 h-7 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center text-base leading-none"
+                              >−</button>
+                              <span className="text-white font-bold w-4 text-center">{form.additionalAreas}</span>
+                              <button
+                                type="button"
+                                onClick={() => setForm(p => ({ ...p, additionalAreas: p.additionalAreas + 1 }))}
+                                className="w-7 h-7 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center text-base leading-none"
+                              >+</button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
+              {/* Equine Cryotherapy */}
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                  <span className="text-amber-400 mr-2">—</span>Equine Cryotherapy
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {SERVICE_CATALOG.filter(s => s.category === 'equine').map(service => {
+                    const sel = form.serviceId === service.id;
+                    return (
+                      <div key={service.id}>
+                        <button
+                          type="button"
+                          onClick={() => selectService(service.id)}
+                          className={`w-full text-left rounded-xl p-5 border-2 transition-all duration-150 ${
+                            sel
+                              ? 'border-amber-400 bg-amber-400/10'
+                              : 'border-slate-700 hover:border-slate-500 bg-transparent'
+                          }`}
+                        >
+                          <div className="text-white font-bold text-sm mb-1">{service.name}</div>
+                          <div className="text-slate-400 text-xs leading-relaxed mb-3">{service.description}</div>
+                          {service.tiers ? (
+                            <div className="text-amber-400 font-black text-sm">
+                              ${service.tiers[0].price} – ${service.tiers[service.tiers.length - 1].price}
+                            </div>
+                          ) : (
+                            <div className="text-amber-400 font-black">${service.basePrice}</div>
+                          )}
+                        </button>
+                        {/* Tier selector + additional areas for Equine Spot */}
+                        {sel && service.tiers && (
+                          <div className="mt-2 bg-slate-800/60 border border-slate-700/50 rounded-lg p-3">
+                            <div className="text-slate-400 text-xs mb-2">Select treatment scope:</div>
+                            <div className="grid grid-cols-2 gap-1.5 mb-3">
+                              {service.tiers.map((tier, idx) => (
+                                <button
+                                  key={tier.label}
+                                  type="button"
+                                  onClick={() => setForm(p => ({ ...p, equineSpotTierIndex: idx }))}
+                                  className={`rounded-lg px-2 py-2 text-xs font-semibold transition-all ${
+                                    form.equineSpotTierIndex === idx
+                                      ? 'bg-amber-400 text-[#020c1b]'
+                                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                                  }`}
+                                >
+                                  {tier.label} — ${tier.price}
+                                </button>
+                              ))}
+                            </div>
+                            {service.additionalAreaPrice && (
+                              <div className="flex items-center justify-between border-t border-slate-700/50 pt-3">
+                                <span className="text-slate-400 text-xs">Additional areas (+${service.additionalAreaPrice} each)</span>
+                                <div className="flex items-center gap-3">
+                                  <button
+                                    type="button"
+                                    onClick={() => setForm(p => ({ ...p, additionalAreas: Math.max(0, p.additionalAreas - 1) }))}
+                                    className="w-7 h-7 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center text-base leading-none"
+                                  >−</button>
+                                  <span className="text-white font-bold w-4 text-center">{form.additionalAreas}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setForm(p => ({ ...p, additionalAreas: p.additionalAreas + 1 }))}
+                                    className="w-7 h-7 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center text-base leading-none"
+                                  >+</button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Barn Packages */}
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                  <span className="text-red-500 mr-2">—</span>Barn Day Packages
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {SERVICE_CATALOG.filter(s => s.category === 'barn').map(service => {
+                    const sel = form.serviceId === service.id;
+                    return (
+                      <button
+                        key={service.id}
+                        type="button"
+                        onClick={() => selectService(service.id)}
+                        className={`w-full text-left rounded-xl p-5 border-2 transition-all duration-150 ${
+                          sel
+                            ? 'border-red-500 bg-red-500/10'
+                            : 'border-slate-700 hover:border-slate-500 bg-transparent'
+                        }`}
+                      >
+                        <div className="text-white font-bold text-sm mb-1">{service.name}</div>
+                        <div className="text-slate-400 text-xs mb-3">{service.description}</div>
+                        <div className="flex items-end justify-between gap-1">
+                          <div className="text-red-500 font-black text-lg">${service.basePrice}</div>
+                          {service.barnNote && (
+                            <div className="text-slate-500 text-xs text-right">{service.barnNote}</div>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Estimated total */}
+              {selectedService && (
+                <div className="bg-[#0a1e38] border border-red-500/20 rounded-xl px-5 py-4 mb-6 flex items-center justify-between">
+                  <div>
+                    <div className="text-slate-300 text-sm font-semibold">Estimated Total</div>
+                    <div className="text-slate-500 text-xs mt-0.5">Travel fee not included</div>
+                  </div>
+                  <div className="text-white font-black text-2xl">${calculateTotal()}</div>
+                </div>
+              )}
+
+              {/* Equine safety note */}
               {isEquine && (
-                <div className="bg-amber-400/5 border border-amber-400/25 rounded-xl p-4 mb-6 text-sm text-slate-300">
+                <div className="bg-amber-400/5 border border-amber-400/25 rounded-xl p-4 mb-6">
                   <div className="flex items-start gap-3">
                     <svg className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
                     </svg>
                     <div>
-                      <p className="font-semibold text-amber-400 mb-1">A Note on Equine Treatments</p>
-                      <p className="text-slate-400 leading-relaxed">For the safety and comfort of both horse and handler, treatments are best suited for horses that are calm and comfortable with basic handling. The cryotherapy unit does produce a mild hissing sound during use. If you&apos;re unsure how your horse may react, please feel free to reach out beforehand and I&apos;d be happy to discuss whether treatment would be a good fit.</p>
+                      <p className="font-semibold text-amber-400 text-sm mb-1">A Note on Equine Treatments</p>
+                      <p className="text-slate-400 text-sm leading-relaxed">For the safety and comfort of both horse and handler, treatments are best suited for horses that are calm and comfortable with basic handling. The cryotherapy unit does produce a mild hissing sound during use. If you&apos;re unsure how your horse may react, please feel free to reach out beforehand and I&apos;d be happy to discuss whether treatment would be a good fit.</p>
                     </div>
                   </div>
                 </div>
@@ -484,14 +705,14 @@ export default function SchedulePage() {
 
               {/* Equine fields */}
               {isEquine && (
-                <div className="mt-6 pt-6 border-t border-blue-400/10">
+                <div className="mt-6 pt-6 border-t border-amber-400/10">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-6 h-6 rounded bg-blue-400/10 border border-blue-400/20 flex items-center justify-center">
-                      <svg className="w-3.5 h-3.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <div className="w-6 h-6 rounded bg-amber-400/10 border border-amber-400/20 flex items-center justify-center">
+                      <svg className="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                       </svg>
                     </div>
-                    <h3 className="text-blue-400 font-semibold text-sm tracking-wide">Equine Information</h3>
+                    <h3 className="text-amber-400 font-semibold text-sm tracking-wide">Equine Information</h3>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
@@ -618,7 +839,8 @@ export default function SchedulePage() {
 
               <div className="space-y-3 mb-8">
                 {[
-                  { label: 'Service', value: form.serviceType.charAt(0).toUpperCase() + form.serviceType.slice(1) + ' Cryotherapy' },
+                  { label: 'Service', value: selectedService?.name ?? '' },
+                  { label: 'Est. Total', value: `$${calculateTotal()} (+ travel fee)` },
                   { label: 'Name', value: `${form.firstName} ${form.lastName}` },
                   { label: 'Email', value: form.email },
                   { label: 'Phone', value: form.phone },
@@ -631,7 +853,7 @@ export default function SchedulePage() {
                   ...(form.notes ? [{ label: 'Notes', value: form.notes }] : []),
                 ].map((item) => (
                   <div key={item.label} className="flex gap-3 py-2.5 border-b border-slate-800">
-                    <span className="text-slate-500 text-sm w-20 shrink-0">{item.label}</span>
+                    <span className="text-slate-500 text-sm w-24 shrink-0">{item.label}</span>
                     <span className="text-slate-200 text-sm">{item.value}</span>
                   </div>
                 ))}

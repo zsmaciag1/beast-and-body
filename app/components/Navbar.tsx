@@ -9,6 +9,7 @@ import WaiverCheckLink from './WaiverCheckLink';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
   { href: '/schedule', label: 'Schedule' },
   { href: '/waiver', label: 'Waiver' },
 ];

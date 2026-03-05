@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const required = ['serviceType', 'firstName', 'lastName', 'email', 'phone', 'preferredDate', 'preferredTime', 'serviceAddress', 'city', 'state'];
+    const required = ['serviceId', 'firstName', 'lastName', 'email', 'phone', 'preferredDate', 'preferredTime', 'serviceAddress', 'city', 'state'];
     for (const field of required) {
-      if (!body[field] || String(body[field]).trim() === '') {
+      if (body[field] === undefined || body[field] === null || String(body[field]).trim() === '') {
         return NextResponse.json({ error: `Missing required field: ${field}` }, { status: 400 });
       }
     }
@@ -30,8 +30,9 @@ export async function POST(req: NextRequest) {
 
         <h3>Service</h3>
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:4px 8px;font-weight:bold;">Type</td><td style="padding:4px 8px;">${body.serviceType}</td></tr>
-          <tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Date</td><td style="padding:4px 8px;">${body.preferredDate}</td></tr>
+          <tr><td style="padding:4px 8px;font-weight:bold;">Service</td><td style="padding:4px 8px;">${body.serviceName || body.serviceId}</td></tr>
+          ${body.estimatedTotal ? `<tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Est. Total</td><td style="padding:4px 8px;">$${body.estimatedTotal} (+ travel fee)</td></tr>` : ''}
+          <tr><td style="padding:4px 8px;font-weight:bold;">Date</td><td style="padding:4px 8px;">${body.preferredDate}</td></tr>
           <tr><td style="padding:4px 8px;font-weight:bold;">Time</td><td style="padding:4px 8px;">${body.preferredTime}</td></tr>
           <tr style="background:#f9f9f9;"><td style="padding:4px 8px;font-weight:bold;">Location</td><td style="padding:4px 8px;">${body.serviceAddress}, ${body.city}, ${body.state}</td></tr>
           ${body.notes ? `<tr><td style="padding:4px 8px;font-weight:bold;">Notes</td><td style="padding:4px 8px;">${body.notes}</td></tr>` : ''}
@@ -54,7 +55,8 @@ export async function POST(req: NextRequest) {
 
         <div style="background:#f9f9f9;border-left:4px solid #dc2626;padding:12px 16px;margin:20px 0;">
           <p style="margin:0;font-weight:bold;">Confirmation #: ${confirmationNumber}</p>
-          <p style="margin:8px 0 0;">Service: ${body.serviceType}</p>
+          <p style="margin:8px 0 0;">Service: ${body.serviceName || body.serviceId}</p>
+          ${body.estimatedTotal ? `<p style="margin:4px 0;">Estimated Total: $${body.estimatedTotal} (+ travel fee)</p>` : ''}
           <p style="margin:4px 0;">Requested Date: ${body.preferredDate} at ${body.preferredTime}</p>
           <p style="margin:4px 0;">Location: ${body.serviceAddress}, ${body.city}, ${body.state}</p>
         </div>
